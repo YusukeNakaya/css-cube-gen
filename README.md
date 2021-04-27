@@ -1,5 +1,7 @@
 # css-cube-gen
 
+https://css-cube-generator.netlify.app/
+
 ## Project setup
 ```
 npm install

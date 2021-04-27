@@ -1,22 +1,26 @@
 <template lang="pug">
 .cube-gen
   .gen-form
-    .width
+    .part.width
       .label Width
       input.input(type="range" min="1" max="500" step="1" v-model="width")
-    .height
+      input.subinput(type="number" v-model="width")
+    .part.height
       .label Height
       input.input(type="range" min="1" max="500" step="1" v-model="height")
-    .depth
+      input.subinput(type="number" v-model="height")
+    .part.depth
       .label Depth
       input.input(type="range" min="1" max="500" step="1" v-model="depth")
-    .opacity
+      input.subinput(type="number" v-model="depth")
+    .part.opacity
       .label Opacity
       input.input(type="range" min="0" max="1" step="0.01" v-model="opacity")
-    .color
+      input.subinput(type="number" v-model="opacity")
+    .part.color
       .label Color #
       input.input(type="text" maxlength="6" v-model="color")
-    .shadow
+    .part.shadow
       .label Shadow
       input.input(type="number" v-model="shadowRatio")
   .gen-view
@@ -30,8 +34,8 @@
   .gen-code
     .html
       | Pug
-      pre.pre
-        code.code(@click="copy")
+      pre.pre(@click="copy")
+        code.code
           | .your-cube
           |   .face.-face1
           |   .face.-face2
@@ -41,8 +45,8 @@
           |   .face.-face6
     .css
       | SCSS
-      pre.pre
-        code.code(@click="copy")
+      pre.pre(@click="copy")
+        code.code
           | .your-cube {
           |   position: absolute;
           |   top: 50%;
@@ -155,11 +159,27 @@ export default {
 
 .gen-form {
   position: absolute;
-  top: 100px;
+  top: 20px;
   left: 20px;
 
   .input {
     width: 200px;
+  }
+
+  .subinput {
+    width: 70px;
+    margin-left: 30px;
+    text-align: right;
+  }
+
+  .part {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .label {
+    width: 80px;
   }
 }
 
@@ -208,17 +228,28 @@ export default {
 
 .gen-code {
   position: absolute;
-  top: 0;
+  top: 20px;
   right: 20px;
-  width: 400px;
+  width: 450px;
 
   .pre {
+    display: block;
     margin: 0;
-    padding: 20px;
+    padding: 15px;
     background: rgba(0, 0, 0, 0.8);
     font-size: 10px;
     line-height: 1.2;
-    color: #fff;
+    color: #fefefe;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:active {
+      opacity: 0.9;
+    }
+  }
+
+  .css {
+    margin-top: 20px;
   }
 }
 </style>

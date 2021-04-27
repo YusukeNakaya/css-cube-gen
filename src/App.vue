@@ -17,16 +17,19 @@ export default {
 </script>
 
 <style lang="scss">
-@import url(https://fonts.googleapis.com/css2?family=Teko:wght@700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap);
 
 .css-app {
-  font-family: 'Teko', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+  background: #FEFEFE;
 
   .title {
     position: absolute;
-    font-size: 100px;
+    left: 25px;
+    bottom: 20px;
+    font-size: 50px;
     line-height: 1;
-    color: rgba(100, 100, 100, 1);
+    color: rgba(200, 200, 200, 1);
   }
 }
 </style>
