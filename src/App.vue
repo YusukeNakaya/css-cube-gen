@@ -1,10 +1,12 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <CubeGen msg="Welcome to Your Vue.js App"/>
+<template lang="pug">
+.css-app
+  h1.title CSS 3D CUBE
+  CubeGen
 </template>
 
 <script>
 import CubeGen from './components/CubeGen.vue'
+import 'modern-css-reset'
 
 export default {
   name: 'App',
@@ -15,12 +17,16 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url(https://fonts.googleapis.com/css2?family=Teko:wght@700&display=swap);
+
+.css-app {
+  font-family: 'Teko', sans-serif;
+
+  .title {
+    position: absolute;
+    font-size: 100px;
+    line-height: 1;
+    color: rgba(100, 100, 100, 1);
+  }
 }
 </style>
