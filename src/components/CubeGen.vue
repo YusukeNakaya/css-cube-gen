@@ -107,7 +107,7 @@ export default {
       height: 100,
       depth: 100,
       opacity: 1,
-      color: 'ff0000',
+      color: '6C99C6',
       rotateX: 0,
       rotateY: 0,
       shadowRatio: 2
