@@ -47,6 +47,7 @@
           |   position: absolute;
           |   top: 50%;
           |   left: 50%;
+          |   transform-style: preserve-3d;
           |
           |   .face {
           |     position: absolute;
