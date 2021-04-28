@@ -23,31 +23,117 @@
     .part.shadow
       .label Shadow
       input.input(type="number" v-model="shadowRatio")
+    .part.class
+      .label Class
+      input.input(type="text" v-model="className")
+      a.anchor(@click="updateClassName")
+        img.icon(src="@/assets/reload.svg" alt="Reload")
   .gen-view
     .cube(:style="{transform: 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)'}")
-      .face.-face1(:style="{background: 'rgba(' + (red - 5 * shadowRatio) + ', ' + (green - 5 * shadowRatio) + ', ' + (blue - 5 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(0deg) translateZ(' + depth / 2 + 'px)'}")
-      .face.-face2(:style="{background: 'rgba(' + (red - 10 * shadowRatio) + ', ' + (green - 10 * shadowRatio) + ', ' + (blue - 10 * shadowRatio) + ', ' + opacity + ')', width: depth + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(90deg) translateZ(' + width / 2 + 'px)'}")
-      .face.-face3(:style="{background: 'rgba(' + (red - 0 * shadowRatio) + ', ' + (green - 0 * shadowRatio) + ', ' + (blue - 0) + ', ' + opacity + ')', width: width + 'px', height: depth + 'px', transform: 'translate(-50%, -50%) rotateX(90deg) translateZ(' + height / 2 + 'px)'}")
-      .face.-face4(:style="{background: 'rgba(' + (red - 20 * shadowRatio) + ', ' + (green - 20 * shadowRatio) + ', ' + (blue - 20 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: depth + 'px', transform: 'translate(-50%, -50%) rotateX(-90deg) translateZ(' + height / 2 + 'px)'}")
-      .face.-face5(:style="{background: 'rgba(' + (red - 10 * shadowRatio) + ', ' + (green - 10 * shadowRatio) + ', ' + (blue - 10 * shadowRatio) + ', ' + opacity + ')', width: depth + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(-90deg) translateZ(' + width / 2 + 'px)'}")
-      .face.-face6(:style="{background: 'rgba(' + (red - 15 * shadowRatio) + ', ' + (green - 15 * shadowRatio) + ', ' + (blue - 15 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(180deg) translateZ(' + depth / 2 + 'px)'}")
+      .face.-front(:style="{background: 'rgba(' + (red - 5 * shadowRatio) + ', ' + (green - 5 * shadowRatio) + ', ' + (blue - 5 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(0deg) translateZ(' + depth / 2 + 'px)'}")
+      .face.-left(:style="{background: 'rgba(' + (red - 10 * shadowRatio) + ', ' + (green - 10 * shadowRatio) + ', ' + (blue - 10 * shadowRatio) + ', ' + opacity + ')', width: depth + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(90deg) translateZ(' + width / 2 + 'px)'}")
+      .face.-top(:style="{background: 'rgba(' + (red - 0 * shadowRatio) + ', ' + (green - 0 * shadowRatio) + ', ' + (blue - 0) + ', ' + opacity + ')', width: width + 'px', height: depth + 'px', transform: 'translate(-50%, -50%) rotateX(90deg) translateZ(' + height / 2 + 'px)'}")
+      .face.-bottom(:style="{background: 'rgba(' + (red - 20 * shadowRatio) + ', ' + (green - 20 * shadowRatio) + ', ' + (blue - 20 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: depth + 'px', transform: 'translate(-50%, -50%) rotateX(-90deg) translateZ(' + height / 2 + 'px)'}")
+      .face.-right(:style="{background: 'rgba(' + (red - 10 * shadowRatio) + ', ' + (green - 10 * shadowRatio) + ', ' + (blue - 10 * shadowRatio) + ', ' + opacity + ')', width: depth + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(-90deg) translateZ(' + width / 2 + 'px)'}")
+      .face.-back(:style="{background: 'rgba(' + (red - 15 * shadowRatio) + ', ' + (green - 15 * shadowRatio) + ', ' + (blue - 15 * shadowRatio) + ', ' + opacity + ')', width: width + 'px', height: height + 'px', transform: 'translate(-50%, -50%) rotateY(180deg) translateZ(' + depth / 2 + 'px)'}")
   .gen-code
     .html
-      | Pug
+      nav.nav
+        ul.list
+          li.item
+            a.anchor(:class="{'-active' : mode.html === 'html'}" @click="mode.html = 'html'") HTML
+          li.item
+            a.anchor(:class="{'-active' : mode.html === 'pug'}" @click="mode.html = 'pug'") Pug
       pre.pre(@click="copy")
-        code.code
-          | .your-cube
-          |   .face.-face1
-          |   .face.-face2
-          |   .face.-face3
-          |   .face.-face4
-          |   .face.-face5
-          |   .face.-face6
+        code.code(v-if="mode.html === 'html'")
+          | &lt;div class="{{className}}"&gt;
+          |   &lt;div class="face -front"&gt;
+          |   &lt;div class="face -left"&gt;
+          |   &lt;div class="face -top"&gt;
+          |   &lt;div class="face -bottom"&gt;
+          |   &lt;div class="face -right"&gt;
+          |   &lt;div class="face -back"&gt;
+          | &lt;/div&gt;
+        code.code(v-else-if="mode.html === 'pug'")
+          | .{{className}}
+          |   .face.-front
+          |   .face.-left
+          |   .face.-top
+          |   .face.-bottom
+          |   .face.-right
+          |   .face.-back
     .css
-      | SCSS
+      nav.nav
+        ul.list
+          li.item
+            a.anchor(:class="{'-active' : mode.css === 'css'}" @click="mode.css = 'css'") CSS
+          li.item
+            a.anchor(:class="{'-active' : mode.css === 'scss'}" @click="mode.css = 'scss'") SCSS
       pre.pre(@click="copy")
-        code.code
-          | .your-cube {
+        code.code(v-if="mode.css === 'css'")
+          | .{{className}} {
+          |   position: absolute;
+          |   top: 50%;
+          |   left: 50%;
+          |   transform-style: preserve-3d;
+          | }
+          |
+          | .{{className}} .face {
+          |   position: absolute;
+          | }
+          |
+          | .{{className}} .-front {
+          |   width: {{width}}px;
+          |   height: {{height}}px;
+          |   transform: translate(-50%, -50%) rotateY(0deg) translateZ({{depth / 2}}px);
+          |   background: rgba({{red - 5}}, {{green - 5}}, {{blue - 5}}, {{opacity}});
+          | }
+          |
+          | .{{className}} .-left {
+          |   width: {{depth}}px;
+          |   height: {{height}}px;
+          |   transform: translate(-50%, -50%) rotateY(90deg) translateZ({{width / 2}}px);
+          |   background: rgba({{red - 10 * shadowRatio}}, {{green - 10 * shadowRatio}}, {{blue - 10 * shadowRatio}}, {{opacity}});
+          | }
+          |
+          | .{{className}} .-top {
+          |   width: {{width}}px;
+          |   height: {{depth}}px;
+          |   transform: translate(-50%, -50%) rotateX(90deg) translateZ({{height / 2}}px);
+          |   background: rgba({{red}}, {{green}}, {{blue}}, {{opacity}});
+          | }
+          |
+          | .{{className}} .-bottom {
+          |   width: {{width}}px;
+          |   height: {{depth}}px;
+          |   transform: translate(-50%, -50%) rotateX(-90deg) translateZ({{height / 2}}px);
+          |   background: rgba({{red - 20 * shadowRatio}}, {{green - 20 * shadowRatio}}, {{blue - 20 * shadowRatio}}, {{opacity}});
+          | }
+          |
+          | .{{className}} .-right {
+          |   width: {{depth}}px;
+          |   height: {{height}}px;
+          |   transform: translate(-50%, -50%) rotateY(-90deg) translateZ({{width / 2}}px);
+          |   background: rgba({{red - 10 * shadowRatio}}, {{green - 10 * shadowRatio}}, {{blue - 10 * shadowRatio}}, {{opacity}});
+          | }
+          |
+          | .{{className}} .-back {
+          |   width: {{width}}px;
+          |   height: {{height}}px;
+          |   transform: translate(-50%, -50%) rotateY(180deg) translateZ({{depth / 2}}px);
+          |   background: rgba({{red - 15 * shadowRatio}}, {{green - 15 * shadowRatio}}, {{blue - 15 * shadowRatio}}, {{opacity}});
+          | }
+        code.code(v-else-if="mode.css === 'scss'")
+          | .{{className}} {
+          |   $width: {{width}}px;
+          |   $height: {{height}}px;
+          |   $depth: {{depth}}px;
+          |   $red: {{red}};
+          |   $green: {{green}};
+          |   $blue: {{blue}};
+          |   $opacity: {{opacity}};
+          |   $shadowRatio: {{shadowRatio}};
+          |
           |   position: absolute;
           |   top: 50%;
           |   left: 50%;
@@ -56,46 +142,46 @@
           |   .face {
           |     position: absolute;
           |
-          |     &amp;.-face1 {
-          |       width: {{width}}px;
-          |       height: {{height}}px;
-          |       transform: translate(-50%, -50%) rotateY(0deg) translateZ({{depth / 2}}px);
-          |       background: rgba({{red - 5}}, {{green - 5}}, {{blue - 5}}, {{opacity}});
+          |     &amp;.-front {
+          |       width: $width;
+          |       height: $height;
+          |       transform: translate(-50%, -50%) rotateY(0deg) translateZ($depth / 2);
+          |       background: rgba($red - 5 * $shadowRatio, $green - 5 * $shadowRatio, $blue - 5 * $shadowRatio, $opacity);
           |     }
           |
-          |     &amp;.-face2 {
-          |       width: {{depth}}px;
-          |       height: {{height}}px;
-          |       transform: translate(-50%, -50%) rotateY(90deg) translateZ({{width / 2}}px);
-          |       background: rgba({{red - 10 * shadowRatio}}, {{green - 10 * shadowRatio}}, {{blue - 10 * shadowRatio}}, {{opacity}});
+          |     &amp;.-left {
+          |       width: $depth;
+          |       height: $height;
+          |       transform: translate(-50%, -50%) rotateY(90deg) translateZ($width / 2);
+          |       background: rgba($red - 10 * $shadowRatio, $green - 10 * $shadowRatio, $blue - 10 * $shadowRatio, $opacity);
           |     }
           |
-          |     &amp;.-face3 {
-          |       width: {{width}}px;
-          |       height: {{depth}}px;
-          |       transform: translate(-50%, -50%) rotateX(90deg) translateZ({{height / 2}}px);
-          |       background: rgba({{red}}, {{green}}, {{blue}}, {{opacity}});
+          |     &amp;.-top {
+          |       width: $width;
+          |       height: $depth;
+          |       transform: translate(-50%, -50%) rotateX(90deg) translateZ($height / 2);
+          |       background: rgba($red, $green, $blue, $opacity);
           |     }
           |
-          |     &amp;.-face4 {
-          |       width: {{width}}px;
-          |       height: {{depth}}px;
-          |       transform: translate(-50%, -50%) rotateX(-90deg) translateZ({{height / 2}}px);
-          |       background: rgba({{red - 20 * shadowRatio}}, {{green - 20 * shadowRatio}}, {{blue - 20 * shadowRatio}}, {{opacity}});
+          |     &amp;.-bottom {
+          |       width: $width;
+          |       height: $depth;
+          |       transform: translate(-50%, -50%) rotateX(-90deg) translateZ($height / 2);
+          |       background: rgba($red - 20 * $shadowRatio, $green - 20 * $shadowRatio, $blue - 20 * $shadowRatio, $opacity);
           |     }
           |
-          |     &amp;.-face5 {
-          |       width: {{depth}}px;
-          |       height: {{height}}px;
-          |       transform: translate(-50%, -50%) rotateY(-90deg) translateZ({{width / 2}}px);
-          |       background: rgba({{red - 10 * shadowRatio}}, {{green - 10 * shadowRatio}}, {{blue - 10 * shadowRatio}}, {{opacity}});
+          |     &amp;.-right {
+          |       width: $depth;
+          |       height: $height;
+          |       transform: translate(-50%, -50%) rotateY(-90deg) translateZ($width / 2);
+          |       background: rgba($red - 10 * $shadowRatio, $green - 10 * $shadowRatio, $blue - 10 * $shadowRatio, $opacity);
           |     }
           |
-          |     &amp;.-face6 {
-          |       width: {{width}}px;
-          |       height: {{height}}px;
-          |       transform: translate(-50%, -50%) rotateY(180deg) translateZ({{depth / 2}}px);
-          |       background: rgba({{red - 15 * shadowRatio}}, {{green - 15 * shadowRatio}}, {{blue - 15 * shadowRatio}}, {{opacity}});
+          |     &amp;.-back {
+          |       width: $width;
+          |       height: $height;
+          |       transform: translate(-50%, -50%) rotateY(180deg) translateZ($depth / 2);
+          |       background: rgba($red - 15 * $shadowRatio, $green - 15 * $shadowRatio, $blue - 15 * $shadowRatio, $opacity);
           |     }
           |   }
           | }
@@ -114,7 +200,12 @@ export default {
       color: '6C99C6',
       rotateX: 0,
       rotateY: 0,
-      shadowRatio: 2
+      shadowRatio: 2,
+      className: Math.random().toString(32).substring(2),
+      mode: {
+        css: 'css',
+        html: 'html'
+      }
     }
   },
 
@@ -144,6 +235,10 @@ export default {
       const string = event.target.textContent
       navigator.clipboard.writeText(string)
       console.log(string)
+    },
+
+    updateClassName () {
+      this.className = Math.random().toString(32).substring(2)
     }
   }
 }
@@ -161,6 +256,23 @@ export default {
   position: absolute;
   top: 20px;
   left: 20px;
+
+  .anchor {
+    display: block;
+    margin-left: 10px;
+    transition: 300ms;
+    cursor: pointer;
+
+    &:hover {
+      transform: rotateZ(-90deg);
+      opacity: 0.7;
+    }
+  }
+
+  .icon {
+    width: 20px;
+    height: auto;
+  }
 
   .input {
     width: 200px;
@@ -200,27 +312,27 @@ export default {
     position: absolute;
     background: rgba(255, 0, 0, 0.2);
 
-    &.-face1 {
+    &.-front {
       transform: rotateY(0deg) translateZ(50px);
     }
 
-    &.-face2 {
+    &.-left {
       transform: rotateY(90deg) translateZ(50px);
     }
 
-    &.-face3 {
+    &.-top {
       transform: rotateX(90deg) translateZ(50px);
     }
 
-    &.-face4 {
+    &.-bottom {
       transform: rotateX(-90deg) translateZ(50px);
     }
 
-    &.-face5 {
+    &.-right {
       transform: rotateY(-90deg) translateZ(50px);
     }
 
-    &.-face6 {
+    &.-back {
       transform: rotateY(180deg) translateZ(50px);
     }
   }
@@ -232,9 +344,45 @@ export default {
   right: 20px;
   width: 450px;
 
+  .list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    position: relative;
+
+    &:not(:first-child) {
+      margin-left: 14px;
+      padding-left: 15px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: calc(50% - 7px);
+        left: 0;
+        width: 1px;
+        height: 14px;
+        background: #999;
+      }
+    }
+  }
+
+  .anchor {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: 300ms;
+
+    &.-active {
+      opacity: 1;
+    }
+  }
+
   .pre {
     display: block;
-    margin: 0;
+    margin: 10px 0 0 0;
     padding: 15px;
     background: rgba(0, 0, 0, 0.8);
     font-size: 10px;

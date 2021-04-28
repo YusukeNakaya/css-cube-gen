@@ -1,6 +1,6 @@
 <template lang="pug">
 .css-app
-  .info
+  .site-info
     h1.title CSS 3D CUBE
     .link
       ul.list
@@ -34,15 +34,15 @@ export default {
 .css-app {
   font-family: 'Ubuntu', sans-serif;
   background: #FEFEFE;
+}
 
-  .info {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    z-index: 2;
-    left: 25px;
-    bottom: 20px;
-  }
+.site-info {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  left: 25px;
+  bottom: 20px;
 
   .title {
     font-size: 50px;
